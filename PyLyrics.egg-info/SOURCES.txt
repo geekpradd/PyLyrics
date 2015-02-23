@@ -1,0 +1,10 @@
+setup.py
+PyLyrics/__init__.py
+PyLyrics/classes.py
+PyLyrics/functions.py
+PyLyrics.egg-info/PKG-INFO
+PyLyrics.egg-info/SOURCES.txt
+PyLyrics.egg-info/dependency_links.txt
+PyLyrics.egg-info/not-zip-safe
+PyLyrics.egg-info/requires.txt
+PyLyrics.egg-info/top_level.txt

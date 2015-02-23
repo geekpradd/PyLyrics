@@ -1,36 +1,11 @@
-# -*- coding: utf-8 -*-
 import requests
 from bs4 import BeautifulSoup, Comment, NavigableString
 import sys, codecs, json
+try:
+	from .classes import *
+except:
+	from classes import *
 
-class Track(object):
-	def __init__(self,trackName,album,artist):
-		self.name = trackName
-		self.album = album
-		self.artist = artist
-	def __repr__(self):
-		return self.name 
-	def link(self):
-		return 'http://lyrics.wikia.com/{0}:{1}'.format(self.artist.replace(' ', '-'),self.name.replace(' ','-'))
-	def getLyrics(self):
-		return PyLyrics.getLyrics(self.artist,self.name)
-class Artist(object):
-	def __init__(self, name):
-		self.name = name 
-	def getAlbums(self):
-		return PyLyrics.getAlbums(self.name)
-class Album(object):
-	def __init__(self, name, link,singer):
-		self.year = name.split(' ')[-1]
-		self.name = name.replace(self.year,' ').rstrip()
-		self.url = link 
-		self.singer = singer
-	def link(self):
-		return self.url 
-	def __repr__(self):
-		return self.name
-	def artist(self):
-		return self.singer
 class PyLyrics:
 	@staticmethod
 	def getAlbums(singer):
@@ -44,17 +19,17 @@ class PyLyrics:
 				albums.append(Album(a.text,'http://lyrics.wikia.com' + a['href'],singer))
 			except:
 				pass
+		if albums == []:
+			raise ValueError("Unknown Signer Name given")
+			return None
 		return albums
 	@staticmethod 
 	def getTracks(album):
-		if not isinstance(album, Album):
-			raise TypeError("Parameter is not an instance of Album Class")
-			return None
 		url = "http://lyrics.wikia.com/api.php?artist={0}&fmt=xml".format(album.artist())
 		soup = BeautifulSoup(requests.get(url).text)
 
 		for al in soup.find_all('album'):
-			if al.text == album.name:
+			if al.text.lower().strip() == album.name.strip().lower():
 				currentAlbum = al
 				break
 		songs =[Track(song.text,album,album.artist()) for song in currentAlbum.findNext('songs').findAll('item')]
@@ -70,7 +45,7 @@ class PyLyrics:
 		#Get main lyrics holder
 		lyrics = s.find("div",{'class':'lyricbox'})
 		if lyrics is None:
-			raise ValueError("Song or Singer does not exist")
+			raise ValueError("Song or Singer does not exist or the API does not have Lyrics")
 			return None
 		#Remove Scripts
 		[s.extract() for s in lyrics('script')]
@@ -90,9 +65,12 @@ class PyLyrics:
 		except:
 			return output.encode('utf-8')
 
-album = PyLyrics.getAlbums('Taylor Swift')
-
-tracks = PyLyrics.getTracks(album[-1])
-print (tracks[1].getLyrics())
-
+def main():
+	albums = PyLyrics.getAlbums('Enrique Iglesias')
+	print (albums)
+	tracks = PyLyrics.getTracks(albums[-1])
+	print (tracks[8].getLyrics())
 	
+
+if __name__=='__main__':
+	main()
