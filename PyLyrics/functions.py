@@ -1,10 +1,39 @@
 import requests
 from bs4 import BeautifulSoup, Comment, NavigableString
 import sys, codecs, json
-try:
-	from .classes import *
-except:
-	from classes import *
+
+class Track(object):
+	def __init__(self,trackName,album,artist):
+		self.name = trackName
+		self.album = album
+		self.artist = artist
+	def __repr__(self):
+		return self.name.encode('utf-8')
+	def link(self):
+		return 'http://lyrics.wikia.com/{0}:{1}'.format(self.artist.replace(' ', '-'),self.name.replace(' ','-'))
+	def getLyrics(self):
+		return PyLyrics.getLyrics(self.artist,self.name)
+class Artist(object):
+	def __init__(self, name):
+		self.name = name 
+	def getAlbums(self):
+		return PyLyrics.getAlbums(self.name)
+	def __repr__(self):
+		return self.name.encode('utf-8')
+class Album(object):
+	def __init__(self, name, link,singer):
+		self.year = name.split(' ')[-1]
+		self.name = name.replace(self.year,' ').rstrip()
+		self.url = link 
+		self.singer = singer
+	def link(self):
+		return self.url 
+	def __repr__(self):
+		return self.name.encode('utf-8')
+	def artist(self):
+		return self.singer
+	def tracks(self):
+		return PyLyrics.getTracks(self)
 
 class PyLyrics:
 	@staticmethod
@@ -12,6 +41,7 @@ class PyLyrics:
 		singer = singer.replace(' ', '_')
 		s = BeautifulSoup(requests.get('http://lyrics.wikia.com/{0}'.format(singer)).text)
 		spans = s.findAll('span',{'class':'mw-headline'})
+		
 		albums = []
 		for tag in spans:
 			try:
@@ -19,6 +49,7 @@ class PyLyrics:
 				albums.append(Album(a.text,'http://lyrics.wikia.com' + a['href'],singer))
 			except:
 				pass
+		
 		if albums == []:
 			raise ValueError("Unknown Signer Name given")
 			return None
