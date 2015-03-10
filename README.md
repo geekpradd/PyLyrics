@@ -1,5 +1,9 @@
 ##PyLyrics: A Pythonic Implementation of lyrics.wikia.com
 
+[![Build Status](http://img.shields.io/travis/geekpradd/PyLyrics/master.svg?style=flat-square)](https://travis-ci.org/geekpradd/PyLyrics)
+[![Latest Version](http://img.shields.io/pypi/v/PyLyrics.svg?style=flat-square)](https://pypi.python.org/pypi/PyLyrics/)
+[![License](https://img.shields.io/pypi/l/PyLyrics.svg?style=flat-square)](https://pypi.python.org/pypi/PyLyrics/)
+
 PyLyrics is a python module to get Lyrics of songs from lyrics.wikia.com. It has support for getting albums of a singer and songs from an album from which lyrics can be accessed.
 
 ###Installation
