@@ -58,7 +58,9 @@ from PyLyrics import *
 
 print(PyLyrics.getLyrics('Taylor Swift','Blank Space')) #Print the lyrics directly
 ```
+###Version 1.1 
 
+Fixed a lot encoding errors and inconsistency
 
 ###About
 

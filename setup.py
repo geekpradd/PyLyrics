@@ -6,7 +6,7 @@ try:
 except:
     description=''
 setup(name='PyLyrics',
-      version="1.0.2",
+      version="1.1.0",
       description='Pythonic Implementation of lyrics.wikia.com',
       long_description=description,
       author="Pradipta Bora",

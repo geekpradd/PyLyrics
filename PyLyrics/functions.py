@@ -29,7 +29,9 @@ class Album(object):
 	def link(self):
 		return self.url 
 	def __repr__(self):
-		return self.name.encode('utf-8')
+		if sys.version_info[0] == 2:
+				return self.name.encode('utf-8','replace')
+		return	self.name
 	def artist(self):
 		return self.singer
 	def tracks(self):
@@ -42,18 +44,19 @@ class PyLyrics:
 		s = BeautifulSoup(requests.get('http://lyrics.wikia.com/{0}'.format(singer)).text)
 		spans = s.findAll('span',{'class':'mw-headline'})
 		
-		albums = []
+		als = []
+		
 		for tag in spans:
 			try:
 				a = tag.findAll('a')[0]
-				albums.append(Album(a.text,'http://lyrics.wikia.com' + a['href'],singer))
+				als.append(Album(a.text,'http://lyrics.wikia.com' + a['href'],singer))
 			except:
 				pass
 		
-		if albums == []:
-			raise ValueError("Unknown Signer Name given")
+		if als == []:
+			raise ValueError("Unknown Artist Name given")
 			return None
-		return albums
+		return als
 	@staticmethod 
 	def getTracks(album):
 		url = "http://lyrics.wikia.com/api.php?artist={0}&fmt=xml".format(album.artist())
@@ -90,17 +93,17 @@ class PyLyrics:
 			for match in lyrics.findAll(tag):
 				match.replaceWithChildren()
 		#Get output as a string and remove non unicode characters and replace <br> with newlines
-		output = str(lyrics).encode('utf-8')[22:-6:].decode("utf-8").replace('\n','').replace('<br/>','\n')
+		output = str(lyrics).encode('utf-8', errors='replace')[22:-6:].decode("utf-8").replace('\n','').replace('<br/>','\n')
 		try:
 			return output
 		except:
 			return output.encode('utf-8')
 
 def main():
-	albums = PyLyrics.getAlbums('Enrique Iglesias')
+	albums = PyLyrics.getAlbums('OneRepublic')
 	print (albums)
 	tracks = PyLyrics.getTracks(albums[-1])
-	print (tracks[8].getLyrics())
+	print (tracks[7].getLyrics())
 	
 
 if __name__=='__main__':

@@ -1,6 +1,6 @@
 Metadata-Version: 1.1
 Name: PyLyrics
-Version: 1.0.0
+Version: 1.1.0
 Summary: Pythonic Implementation of lyrics.wikia.com
 Home-page: http://github.com/geekpradd/PyLyrics
 Author: Pradipta Bora
@@ -8,6 +8,8 @@ Author-email: pradd@outlook.com
 License: MIT
 Description: PyLyrics: A Pythonic Implementation of lyrics.wikia.com
         -------------------------------------------------------
+        
+        |Build Status| |Latest Version| |License|
         
         PyLyrics is a python module to get Lyrics of songs from
         lyrics.wikia.com. It has support for getting albums of a singer and
@@ -81,10 +83,22 @@ Description: PyLyrics: A Pythonic Implementation of lyrics.wikia.com
         
             print(PyLyrics.getLyrics('Taylor Swift','Blank Space')) #Print the lyrics directly
         
+        Version 1.1
+        ~~~~~~~~~~~
+        
+        Fixed a lot encoding errors and inconsistency
+        
         About
         ~~~~~
         
         Created by Pradipta (geekpradd), Copyright 2015.
+        
+        .. |Build Status| image:: http://img.shields.io/travis/geekpradd/PyLyrics/master.svg?style=flat-square
+           :target: https://travis-ci.org/geekpradd/PyLyrics
+        .. |Latest Version| image:: http://img.shields.io/pypi/v/PyLyrics.svg?style=flat-square
+           :target: https://pypi.python.org/pypi/PyLyrics/
+        .. |License| image:: https://img.shields.io/pypi/l/PyLyrics.svg?style=flat-square
+           :target: https://pypi.python.org/pypi/PyLyrics/
         
 Platform: UNKNOWN
 Classifier: Development Status :: 5 - Production/Stable

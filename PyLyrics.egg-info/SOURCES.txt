@@ -2,6 +2,7 @@ setup.py
 PyLyrics/__init__.py
 PyLyrics/classes.py
 PyLyrics/functions.py
+PyLyrics/tests.py
 PyLyrics.egg-info/PKG-INFO
 PyLyrics.egg-info/SOURCES.txt
 PyLyrics.egg-info/dependency_links.txt
