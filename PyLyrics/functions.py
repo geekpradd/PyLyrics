@@ -8,7 +8,7 @@ class Track(object):
 		self.album = album
 		self.artist = artist
 	def __repr__(self):
-		return self.name.encode('utf-8')
+		return self.name
 	def link(self):
 		return 'http://lyrics.wikia.com/{0}:{1}'.format(self.artist.replace(' ', '-'),self.name.replace(' ','-'))
 	def getLyrics(self):
@@ -59,7 +59,7 @@ class PyLyrics:
 		return als
 	@staticmethod 
 	def getTracks(album):
-		url = "http://lyrics.wikia.com/api.php?artist={0}&fmt=xml".format(album.artist())
+		url = "http://lyrics.wikia.com/api.php?action=lyrics&artist={0}&fmt=xml".format(album.artist())
 		soup = BeautifulSoup(requests.get(url).text)
 
 		for al in soup.find_all('album'):
